@@ -1,0 +1,2205 @@
+[
+  {
+    "id": "ALERT-4200",
+    "timestamp": "2025-11-03T03:43:00+00:00",
+    "alert_name": "Communication With Known Botnet IP",
+    "severity_raw": 6,
+    "src_ip": "10.41.9.24",
+    "dest_ip": "10.20.1.2",
+    "protocol": "TCP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4200,
+      "description": "Communication With Known Botnet IP :: Bot targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.41.9.24",
+      "magnitude": 6,
+      "severity": 6,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 576,
+      "flow_count": 1134,
+      "start_time": "2025-11-03T03:43:00+00:00",
+      "last_updated_time": "2025-11-03T03:47:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Malware: Outbound Connection To Known C2",
+        "Anomaly: Regular Beaconing Interval Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 6667
+    },
+    "ground_truth_label": "Bot",
+    "triage": {
+      "summary": "Likely bot: Communication With Known Botnet IP from internal host 10.41.9.24 against vpn-gw-01 (10.20.1.2) over TCP, 576 events observed.",
+      "matched_technique": {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "confidence": 0.5,
+        "justification": "Alert indicators (Communication With Known Botnet IP; rules: Malware: Outbound Connection To Known C2) overlap most strongly with T1071 Application Layer Protocol among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Medium",
+        "reasoning": "Scored Medium based on: QRadar magnitude 6/10; credibility 7/10."
+      },
+      "next_steps": [
+        "Validate the destination against threat intel (known C2 / botnet infrastructure).",
+        "Isolate the internal host if beaconing is confirmed.",
+        "Pull the process/parent-process responsible for the outbound connection from EDR.",
+        "Check for lateral movement or additional beaconing from the same host."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.41.9.24\"\n| summarize Bytes=sum(SentBytes), Conns=count() by DestinationIP, DestinationPort\n| order by Bytes desc"
+    },
+    "candidates": [
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1571",
+        "name": "Non-Standard Port",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1095",
+        "name": "Non-Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1568",
+        "name": "Dynamic Resolution",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1583.005",
+        "name": "Botnet",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1584.005",
+        "name": "Botnet",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 3.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.057Z"
+  },
+  {
+    "id": "ALERT-4201",
+    "timestamp": "2025-11-03T08:11:00+00:00",
+    "alert_name": "Meterpreter Reverse Shell Pattern",
+    "severity_raw": 9,
+    "src_ip": "10.26.9.109",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4201,
+      "description": "Meterpreter Reverse Shell Pattern :: Infiltration targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.26.9.109",
+      "magnitude": 9,
+      "severity": 9,
+      "credibility": 6,
+      "relevance": 8,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 764,
+      "flow_count": 482,
+      "start_time": "2025-11-03T08:11:00+00:00",
+      "last_updated_time": "2025-11-03T08:47:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration",
+    "triage": {
+      "summary": "Likely port scan: Meterpreter Reverse Shell Pattern from internal host 10.26.9.109 against billing-app-01 (10.20.6.21) over TCP, 764 events observed.",
+      "matched_technique": {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "confidence": 0.5,
+        "justification": "Alert indicators (Meterpreter Reverse Shell Pattern; rules: Anomaly: Internal Host Scanning Peers) overlap most strongly with T1071 Application Layer Protocol among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 9/10; high severity (9/10)."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.26.9.109\" and DestinationIP == \"10.20.6.21\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1021",
+        "name": "Remote Services",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1571",
+        "name": "Non-Standard Port",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1095",
+        "name": "Non-Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1570",
+        "name": "Lateral Tool Transfer",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1568",
+        "name": "Dynamic Resolution",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.063Z"
+  },
+  {
+    "id": "ALERT-4202",
+    "timestamp": "2025-11-03T04:50:00+00:00",
+    "alert_name": "Possible DNS Tunneling Detected",
+    "severity_raw": 8,
+    "src_ip": "10.26.6.28",
+    "dest_ip": "10.20.2.10",
+    "protocol": "DNS",
+    "asset": "dc-01-domain-controller",
+    "raw_details": {
+      "offense_id": 4202,
+      "description": "Possible DNS Tunneling Detected :: Data Exfiltration targeting dc-01-domain-controller",
+      "offense_type": "Source IP",
+      "offense_source": "10.26.6.28",
+      "magnitude": 7,
+      "severity": 8,
+      "credibility": 7,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 1011,
+      "flow_count": 7827,
+      "start_time": "2025-11-03T04:50:00+00:00",
+      "last_updated_time": "2025-11-03T05:06:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 53
+    },
+    "ground_truth_label": "Data Exfiltration",
+    "triage": {
+      "summary": "Likely data exfiltration: Possible DNS Tunneling Detected from internal host 10.26.6.28 against dc-01-domain-controller (10.20.2.10) over DNS, 1,011 events observed.",
+      "matched_technique": {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "confidence": 0.79,
+        "justification": "Alert indicators (Possible DNS Tunneling Detected; rules: Exfil: Abnormal Outbound Data Volume) overlap most strongly with T1048 Exfiltration Over Alternative Protocol among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 7/10; high severity (8/10); credibility 7/10; data exfiltration pattern indicates likely post-compromise activity."
+      },
+      "next_steps": [
+        "Quantify the outbound volume and destination reputation.",
+        "Isolate the source host and preserve evidence if egress is confirmed.",
+        "Identify what data the host had access to (data classification / DLP).",
+        "For DNS tunneling, inspect query entropy and the resolving domain."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.26.6.28\"\n| summarize Bytes=sum(SentBytes), Conns=count() by DestinationIP, DestinationPort\n| order by Bytes desc"
+    },
+    "candidates": [
+      {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 9.5
+      },
+      {
+        "id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1567",
+        "name": "Exfiltration Over Web Service",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1207",
+        "name": "Rogue Domain Controller",
+        "tactics": [
+          "Defense Impairment"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1556.001",
+        "name": "Domain Controller Authentication",
+        "tactics": [
+          "Defense Impairment",
+          "Persistence",
+          "Credential Access"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1583.002",
+        "name": "DNS Server",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 4.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.064Z"
+  },
+  {
+    "id": "ALERT-4203",
+    "timestamp": "2025-11-03T12:38:00+00:00",
+    "alert_name": "Policy Violation: Unapproved Cloud Storage",
+    "severity_raw": 3,
+    "src_ip": "10.22.9.77",
+    "dest_ip": "10.50.3.44",
+    "protocol": "TCP",
+    "asset": "hmi-station-03",
+    "raw_details": {
+      "offense_id": 4203,
+      "description": "Policy Violation: Unapproved Cloud Storage :: Benign/Low targeting hmi-station-03",
+      "offense_type": "Source IP",
+      "offense_source": "10.22.9.77",
+      "magnitude": 1,
+      "severity": 3,
+      "credibility": 3,
+      "relevance": 1,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "ot_scada"
+      ],
+      "event_count": 17,
+      "flow_count": 21,
+      "start_time": "2025-11-03T12:38:00+00:00",
+      "last_updated_time": "2025-11-03T13:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Benign/Low",
+    "triage": {
+      "summary": "Likely port scan: Policy Violation: Unapproved Cloud Storage from internal host 10.22.9.77 against hmi-station-03 (10.50.3.44) over TCP, 17 events observed.",
+      "matched_technique": {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Policy Violation: Unapproved Cloud Storage; rules: Auth: Repeated Failures Single Account) overlap most strongly with T1590 Gather Victim Network Information among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Low",
+        "reasoning": "Scored Low based on: QRadar magnitude 1/10; targets OT/SCADA asset \"hmi-station-03\" (critical energy infrastructure)."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.22.9.77\" and DestinationIP == \"10.50.3.44\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1087.004",
+        "name": "Cloud Account",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1136.003",
+        "name": "Cloud Account",
+        "tactics": [
+          "Persistence"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1530",
+        "name": "Data from Cloud Storage",
+        "tactics": [
+          "Collection"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1537",
+        "name": "Transfer Data to Cloud Account",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.066Z"
+  },
+  {
+    "id": "ALERT-4204",
+    "timestamp": "2025-11-03T02:33:00+00:00",
+    "alert_name": "RDP Failed Logins Threshold Exceeded",
+    "severity_raw": 6,
+    "src_ip": "98.79.243.215",
+    "dest_ip": "10.20.1.2",
+    "protocol": "TCP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4204,
+      "description": "RDP Failed Logins Threshold Exceeded :: Brute Force targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "98.79.243.215",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 3110,
+      "flow_count": 1916,
+      "start_time": "2025-11-03T02:33:00+00:00",
+      "last_updated_time": "2025-11-03T03:08:00+00:00",
+      "categories": [
+        "Authentication",
+        "User Login Failure"
+      ],
+      "rules": [
+        "Auth: Multiple Login Failures From Single Source",
+        "Auth: Brute Force Login Attempt"
+      ],
+      "assigned_to": null,
+      "dest_port": 3389
+    },
+    "ground_truth_label": "Brute Force",
+    "triage": {
+      "summary": "Likely brute force: RDP Failed Logins Threshold Exceeded from external source 98.79.243.215 against vpn-gw-01 (10.20.1.2) over TCP, 3,110 events observed.",
+      "matched_technique": {
+        "id": "T1110",
+        "name": "Brute Force",
+        "confidence": 0.92,
+        "justification": "Alert indicators (RDP Failed Logins Threshold Exceeded; rules: Auth: Multiple Login Failures From Single Source) overlap most strongly with T1110 Brute Force among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 7/10; source is external to the network; credibility 7/10."
+      },
+      "next_steps": [
+        "Identify the targeted account(s) and whether any authentication succeeded.",
+        "If a login succeeded, treat as a confirmed compromise and reset credentials immediately.",
+        "Enforce/verify account lockout and MFA on the targeted service.",
+        "Block the source IP and hunt for the same source against other assets."
+      ],
+      "suggested_query": "SecurityEvent\n| where TimeGenerated > ago(24h)\n| where IpAddress == \"98.79.243.215\" and EventID in (4625, 4624)\n| summarize Failures=countif(EventID==4625), Successes=countif(EventID==4624) by Account, Computer"
+    },
+    "candidates": [
+      {
+        "id": "T1110",
+        "name": "Brute Force",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 11
+      },
+      {
+        "id": "T1078",
+        "name": "Valid Accounts",
+        "tactics": [
+          "Stealth",
+          "Persistence",
+          "Privilege Escalation",
+          "Initial Access"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1547.002",
+        "name": "Authentication Package",
+        "tactics": [
+          "Persistence",
+          "Privilege Escalation"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1621",
+        "name": "Multi-Factor Authentication Request Generation",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1027.004",
+        "name": "Compile After Delivery",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3
+      },
+      {
+        "id": "T1056.003",
+        "name": "Web Portal Capture",
+        "tactics": [
+          "Collection",
+          "Credential Access"
+        ],
+        "score": 3
+      },
+      {
+        "id": "T1201",
+        "name": "Password Policy Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 3
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.067Z"
+  },
+  {
+    "id": "ALERT-4205",
+    "timestamp": "2025-11-03T03:04:00+00:00",
+    "alert_name": "Directory Traversal Against Web Server",
+    "severity_raw": 6,
+    "src_ip": "156.240.2.115",
+    "dest_ip": "10.20.1.2",
+    "protocol": "HTTP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4205,
+      "description": "Directory Traversal Against Web Server :: Web Attack targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "156.240.2.115",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 6,
+      "relevance": 8,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 214,
+      "flow_count": 158,
+      "start_time": "2025-11-03T03:04:00+00:00",
+      "last_updated_time": "2025-11-03T04:33:00+00:00",
+      "categories": [
+        "Exploit",
+        "Web Application Attack"
+      ],
+      "rules": [
+        "Web: SQL Injection Signature Match",
+        "Web: Malicious Request Pattern"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Web Attack",
+    "triage": {
+      "summary": "Likely web attack: Directory Traversal Against Web Server from external source 156.240.2.115 against vpn-gw-01 (10.20.1.2) over HTTP, 214 events observed.",
+      "matched_technique": {
+        "id": "T1190",
+        "name": "Exploit Public-Facing Application",
+        "confidence": 0.95,
+        "justification": "Alert indicators (Directory Traversal Against Web Server; rules: Web: SQL Injection Signature Match) overlap most strongly with T1190 Exploit Public-Facing Application among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 7/10; source is external to the network."
+      },
+      "next_steps": [
+        "Review the raw request payload and confirm whether the application was actually vulnerable.",
+        "Check WAF/application logs for a successful response (200 with data) vs. blocked.",
+        "Validate input handling on the targeted endpoint; block the source IP.",
+        "Scan the web asset for web shells or unexpected file changes."
+      ],
+      "suggested_query": "AppServiceHTTPLogs\n| where TimeGenerated > ago(24h)\n| where CIp == \"156.240.2.115\"\n| project TimeGenerated, CsMethod, CsUriStem, ScStatus, CsUriQuery"
+    },
+    "candidates": [
+      {
+        "id": "T1190",
+        "name": "Exploit Public-Facing Application",
+        "tactics": [
+          "Initial Access"
+        ],
+        "score": 12
+      },
+      {
+        "id": "T1505",
+        "name": "Server Software Component",
+        "tactics": [
+          "Persistence"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "tactics": [
+          "Execution"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1546.012",
+        "name": "Image File Execution Options Injection",
+        "tactics": [
+          "Privilege Escalation",
+          "Persistence"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1583.006",
+        "name": "Web Services",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1659",
+        "name": "Content Injection",
+        "tactics": [
+          "Initial Access",
+          "Command and Control"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1036.005",
+        "name": "Match Legitimate Resource Name or Location",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.069Z"
+  },
+  {
+    "id": "ALERT-4206",
+    "timestamp": "2025-11-03T12:52:00+00:00",
+    "alert_name": "Nmap SYN Scan From Single Host",
+    "severity_raw": 3,
+    "src_ip": "57.56.179.38",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4206,
+      "description": "Nmap SYN Scan From Single Host :: Port Scan targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "57.56.179.38",
+      "magnitude": 3,
+      "severity": 3,
+      "credibility": 5,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 2043,
+      "flow_count": 1496,
+      "start_time": "2025-11-03T12:52:00+00:00",
+      "last_updated_time": "2025-11-03T13:20:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Port Scan",
+    "triage": {
+      "summary": "Likely port scan: Nmap SYN Scan From Single Host from external source 57.56.179.38 against billing-app-01 (10.20.6.21) over TCP, 2,043 events observed.",
+      "matched_technique": {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Nmap SYN Scan From Single Host; rules: Recon: Excessive Firewall Denies From Single Host) overlap most strongly with T1595 Active Scanning among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Low",
+        "reasoning": "Scored Low based on: QRadar magnitude 3/10; source is external to the network."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"57.56.179.38\" and DestinationIP == \"10.20.6.21\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1596.005",
+        "name": "Scan Databases",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1686.001",
+        "name": "Cloud Firewall",
+        "tactics": [
+          "Defense Impairment"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1205.001",
+        "name": "Port Knocking",
+        "tactics": [
+          "Stealth",
+          "Persistence",
+          "Command and Control"
+        ],
+        "score": 2.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.070Z"
+  },
+  {
+    "id": "ALERT-4207",
+    "timestamp": "2025-11-03T11:37:00+00:00",
+    "alert_name": "SYN Flood Detected",
+    "severity_raw": 9,
+    "src_ip": "184.201.58.207",
+    "dest_ip": "10.20.5.9",
+    "protocol": "TCP",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4207,
+      "description": "SYN Flood Detected :: DoS/DDoS targeting mail-relay-01",
+      "offense_type": "Destination IP",
+      "offense_source": "184.201.58.207",
+      "magnitude": 8,
+      "severity": 9,
+      "credibility": 9,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 124905,
+      "flow_count": 54718,
+      "start_time": "2025-11-03T11:37:00+00:00",
+      "last_updated_time": "2025-11-03T12:09:00+00:00",
+      "categories": [
+        "Denial of Service",
+        "Network DoS Attack"
+      ],
+      "rules": [
+        "DoS: Possible Network DoS Detected",
+        "DoS: SYN Flood Against Single Destination"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "DoS/DDoS",
+    "triage": {
+      "summary": "Likely dos/ddos: SYN Flood Detected from external source 184.201.58.207 against mail-relay-01 (10.20.5.9) over TCP, 124,905 events observed.",
+      "matched_technique": {
+        "id": "T1498",
+        "name": "Network Denial of Service",
+        "confidence": 0.95,
+        "justification": "Alert indicators (SYN Flood Detected; rules: DoS: Possible Network DoS Detected) overlap most strongly with T1498 Network Denial of Service among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Critical",
+        "reasoning": "Scored Critical based on: QRadar magnitude 8/10; high severity (9/10); source is external to the network; credibility 9/10."
+      },
+      "next_steps": [
+        "Confirm impact: is the destination service degraded or still responsive?",
+        "Identify whether traffic is from a single source or distributed; engage upstream/ISP scrubbing if distributed.",
+        "Apply rate-limiting / SYN-cookie protections on the targeted service.",
+        "Preserve NetFlow for the attack window for post-incident review."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"184.201.58.207\" and DestinationIP == \"10.20.5.9\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1498",
+        "name": "Network Denial of Service",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 13.5
+      },
+      {
+        "id": "T1499",
+        "name": "Endpoint Denial of Service",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 11.5
+      },
+      {
+        "id": "T1498.001",
+        "name": "Direct Network Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1499.001",
+        "name": "OS Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1499.002",
+        "name": "Service Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1499.003",
+        "name": "Application Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.072Z"
+  },
+  {
+    "id": "ALERT-4208",
+    "timestamp": "2025-11-03T03:17:00+00:00",
+    "alert_name": "Suspected Lateral Movement (SMB)",
+    "severity_raw": 10,
+    "src_ip": "10.33.7.94",
+    "dest_ip": "10.20.5.9",
+    "protocol": "TCP",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4208,
+      "description": "Suspected Lateral Movement (SMB) :: Infiltration targeting mail-relay-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.33.7.94",
+      "magnitude": 9,
+      "severity": 10,
+      "credibility": 6,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 162,
+      "flow_count": 206,
+      "start_time": "2025-11-03T03:17:00+00:00",
+      "last_updated_time": "2025-11-03T03:38:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration",
+    "triage": {
+      "summary": "Likely port scan: Suspected Lateral Movement (SMB) from internal host 10.33.7.94 against mail-relay-01 (10.20.5.9) over TCP, 162 events observed.",
+      "matched_technique": {
+        "id": "T1570",
+        "name": "Lateral Tool Transfer",
+        "confidence": 0.67,
+        "justification": "Alert indicators (Suspected Lateral Movement (SMB); rules: Anomaly: Internal Host Scanning Peers) overlap most strongly with T1570 Lateral Tool Transfer among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 9/10; high severity (10/10)."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.33.7.94\" and DestinationIP == \"10.20.5.9\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1570",
+        "name": "Lateral Tool Transfer",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1021",
+        "name": "Remote Services",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1557.001",
+        "name": "Name Resolution Poisoning and SMB Relay",
+        "tactics": [
+          "Credential Access",
+          "Collection"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1571",
+        "name": "Non-Standard Port",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1095",
+        "name": "Non-Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.073Z"
+  },
+  {
+    "id": "ALERT-4209",
+    "timestamp": "2025-11-03T12:05:00+00:00",
+    "alert_name": "Sensitive Data Egress Over HTTPS",
+    "severity_raw": 9,
+    "src_ip": "10.22.7.99",
+    "dest_ip": "10.20.5.9",
+    "protocol": "DNS",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4209,
+      "description": "Sensitive Data Egress Over HTTPS :: Data Exfiltration targeting mail-relay-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.22.7.99",
+      "magnitude": 8,
+      "severity": 9,
+      "credibility": 5,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 4671,
+      "flow_count": 5873,
+      "start_time": "2025-11-03T12:05:00+00:00",
+      "last_updated_time": "2025-11-03T12:43:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Data Exfiltration",
+    "triage": {
+      "summary": "Likely data exfiltration: Sensitive Data Egress Over HTTPS from internal host 10.22.7.99 against mail-relay-01 (10.20.5.9) over DNS, 4,671 events observed.",
+      "matched_technique": {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "confidence": 0.79,
+        "justification": "Alert indicators (Sensitive Data Egress Over HTTPS; rules: Exfil: Abnormal Outbound Data Volume) overlap most strongly with T1048 Exfiltration Over Alternative Protocol among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Critical",
+        "reasoning": "Scored Critical based on: QRadar magnitude 8/10; high severity (9/10); data exfiltration pattern indicates likely post-compromise activity."
+      },
+      "next_steps": [
+        "Quantify the outbound volume and destination reputation.",
+        "Isolate the source host and preserve evidence if egress is confirmed.",
+        "Identify what data the host had access to (data classification / DLP).",
+        "For DNS tunneling, inspect query entropy and the resolving domain."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.22.7.99\"\n| summarize Bytes=sum(SentBytes), Conns=count() by DestinationIP, DestinationPort\n| order by Bytes desc"
+    },
+    "candidates": [
+      {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 9.5
+      },
+      {
+        "id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1567",
+        "name": "Exfiltration Over Web Service",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1005",
+        "name": "Data from Local System",
+        "tactics": [
+          "Collection"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1020",
+        "name": "Automated Exfiltration",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1583.002",
+        "name": "DNS Server",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 4.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.073Z"
+  },
+  {
+    "id": "ALERT-4210",
+    "timestamp": "2025-11-03T11:23:00+00:00",
+    "alert_name": "Sensitive Data Egress Over HTTPS",
+    "severity_raw": 9,
+    "src_ip": "10.34.1.246",
+    "dest_ip": "10.20.2.10",
+    "protocol": "DNS",
+    "asset": "dc-01-domain-controller",
+    "raw_details": {
+      "offense_id": 4210,
+      "description": "Sensitive Data Egress Over HTTPS :: Data Exfiltration targeting dc-01-domain-controller",
+      "offense_type": "Source IP",
+      "offense_source": "10.34.1.246",
+      "magnitude": 7,
+      "severity": 9,
+      "credibility": 5,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 8617,
+      "flow_count": 3558,
+      "start_time": "2025-11-03T11:23:00+00:00",
+      "last_updated_time": "2025-11-03T12:11:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Data Exfiltration",
+    "triage": {
+      "summary": "Likely data exfiltration: Sensitive Data Egress Over HTTPS from internal host 10.34.1.246 against dc-01-domain-controller (10.20.2.10) over DNS, 8,617 events observed.",
+      "matched_technique": {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "confidence": 0.79,
+        "justification": "Alert indicators (Sensitive Data Egress Over HTTPS; rules: Exfil: Abnormal Outbound Data Volume) overlap most strongly with T1048 Exfiltration Over Alternative Protocol among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 7/10; high severity (9/10); data exfiltration pattern indicates likely post-compromise activity."
+      },
+      "next_steps": [
+        "Quantify the outbound volume and destination reputation.",
+        "Isolate the source host and preserve evidence if egress is confirmed.",
+        "Identify what data the host had access to (data classification / DLP).",
+        "For DNS tunneling, inspect query entropy and the resolving domain."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.34.1.246\"\n| summarize Bytes=sum(SentBytes), Conns=count() by DestinationIP, DestinationPort\n| order by Bytes desc"
+    },
+    "candidates": [
+      {
+        "id": "T1048",
+        "name": "Exfiltration Over Alternative Protocol",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 9.5
+      },
+      {
+        "id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1567",
+        "name": "Exfiltration Over Web Service",
+        "tactics": [
+          "Exfiltration"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1556.001",
+        "name": "Domain Controller Authentication",
+        "tactics": [
+          "Defense Impairment",
+          "Persistence",
+          "Credential Access"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1583.002",
+        "name": "DNS Server",
+        "tactics": [
+          "Resource Development"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1207",
+        "name": "Rogue Domain Controller",
+        "tactics": [
+          "Defense Impairment"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 4.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.074Z"
+  },
+  {
+    "id": "ALERT-4211",
+    "timestamp": "2025-11-03T08:45:00+00:00",
+    "alert_name": "SSH Brute Force Against Server",
+    "severity_raw": 6,
+    "src_ip": "200.84.16.143",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4211,
+      "description": "SSH Brute Force Against Server :: Brute Force targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "200.84.16.143",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 9,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 1116,
+      "flow_count": 3173,
+      "start_time": "2025-11-03T08:45:00+00:00",
+      "last_updated_time": "2025-11-03T09:16:00+00:00",
+      "categories": [
+        "Authentication",
+        "User Login Failure"
+      ],
+      "rules": [
+        "Auth: Multiple Login Failures From Single Source",
+        "Auth: Brute Force Login Attempt"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Brute Force",
+    "triage": {
+      "summary": "Likely brute force: SSH Brute Force Against Server from external source 200.84.16.143 against billing-app-01 (10.20.6.21) over TCP, 1,116 events observed.",
+      "matched_technique": {
+        "id": "T1110",
+        "name": "Brute Force",
+        "confidence": 0.92,
+        "justification": "Alert indicators (SSH Brute Force Against Server; rules: Auth: Multiple Login Failures From Single Source) overlap most strongly with T1110 Brute Force among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 7/10; source is external to the network; credibility 9/10."
+      },
+      "next_steps": [
+        "Identify the targeted account(s) and whether any authentication succeeded.",
+        "If a login succeeded, treat as a confirmed compromise and reset credentials immediately.",
+        "Enforce/verify account lockout and MFA on the targeted service.",
+        "Block the source IP and hunt for the same source against other assets."
+      ],
+      "suggested_query": "SecurityEvent\n| where TimeGenerated > ago(24h)\n| where IpAddress == \"200.84.16.143\" and EventID in (4625, 4624)\n| summarize Failures=countif(EventID==4625), Successes=countif(EventID==4624) by Account, Computer"
+    },
+    "candidates": [
+      {
+        "id": "T1110",
+        "name": "Brute Force",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 11
+      },
+      {
+        "id": "T1078",
+        "name": "Valid Accounts",
+        "tactics": [
+          "Stealth",
+          "Persistence",
+          "Privilege Escalation",
+          "Initial Access"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1098.004",
+        "name": "SSH Authorized Keys",
+        "tactics": [
+          "Persistence",
+          "Privilege Escalation"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1547.002",
+        "name": "Authentication Package",
+        "tactics": [
+          "Persistence",
+          "Privilege Escalation"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1621",
+        "name": "Multi-Factor Authentication Request Generation",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1027.004",
+        "name": "Compile After Delivery",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3
+      },
+      {
+        "id": "T1201",
+        "name": "Password Policy Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 3
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.075Z"
+  },
+  {
+    "id": "ALERT-4212",
+    "timestamp": "2025-11-03T04:37:00+00:00",
+    "alert_name": "Horizontal Port Scan Detected",
+    "severity_raw": 4,
+    "src_ip": "146.62.77.226",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4212,
+      "description": "Horizontal Port Scan Detected :: Port Scan targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "146.62.77.226",
+      "magnitude": 5,
+      "severity": 4,
+      "credibility": 5,
+      "relevance": 4,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 925,
+      "flow_count": 2346,
+      "start_time": "2025-11-03T04:37:00+00:00",
+      "last_updated_time": "2025-11-03T04:59:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 22
+    },
+    "ground_truth_label": "Port Scan",
+    "triage": {
+      "summary": "Likely port scan: Horizontal Port Scan Detected from external source 146.62.77.226 against file-srv-02 (10.20.4.30) over TCP, 925 events observed.",
+      "matched_technique": {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Horizontal Port Scan Detected; rules: Recon: Excessive Firewall Denies From Single Host) overlap most strongly with T1595 Active Scanning among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Medium",
+        "reasoning": "Scored Medium based on: QRadar magnitude 5/10; source is external to the network."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"146.62.77.226\" and DestinationIP == \"10.20.4.30\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1070.004",
+        "name": "File Deletion",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1564.005",
+        "name": "Hidden File System",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1596.005",
+        "name": "Scan Databases",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 3.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.076Z"
+  },
+  {
+    "id": "ALERT-4213",
+    "timestamp": "2025-11-03T02:54:00+00:00",
+    "alert_name": "Unusual Admin Share Access Across Hosts",
+    "severity_raw": 8,
+    "src_ip": "10.47.7.248",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4213,
+      "description": "Unusual Admin Share Access Across Hosts :: Infiltration targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.47.7.248",
+      "magnitude": 9,
+      "severity": 8,
+      "credibility": 8,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 458,
+      "flow_count": 737,
+      "start_time": "2025-11-03T02:54:00+00:00",
+      "last_updated_time": "2025-11-03T03:42:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration",
+    "triage": {
+      "summary": "Likely port scan: Unusual Admin Share Access Across Hosts from internal host 10.47.7.248 against billing-app-01 (10.20.6.21) over TCP, 458 events observed.",
+      "matched_technique": {
+        "id": "T1219",
+        "name": "Remote Access Tools",
+        "confidence": 0.58,
+        "justification": "Alert indicators (Unusual Admin Share Access Across Hosts; rules: Anomaly: Internal Host Scanning Peers) overlap most strongly with T1219 Remote Access Tools among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Critical",
+        "reasoning": "Scored Critical based on: QRadar magnitude 9/10; high severity (8/10); credibility 8/10."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.47.7.248\" and DestinationIP == \"10.20.6.21\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1219",
+        "name": "Remote Access Tools",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1095",
+        "name": "Non-Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 6.5
+      },
+      {
+        "id": "T1071",
+        "name": "Application Layer Protocol",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1021",
+        "name": "Remote Services",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1059",
+        "name": "Command and Scripting Interpreter",
+        "tactics": [
+          "Execution"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1571",
+        "name": "Non-Standard Port",
+        "tactics": [
+          "Command and Control"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1570",
+        "name": "Lateral Tool Transfer",
+        "tactics": [
+          "Lateral Movement"
+        ],
+        "score": 5.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.077Z"
+  },
+  {
+    "id": "ALERT-4214",
+    "timestamp": "2025-11-03T12:47:00+00:00",
+    "alert_name": "Single User Multiple Failed Logins (Typo)",
+    "severity_raw": 1,
+    "src_ip": "10.34.2.65",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4214,
+      "description": "Single User Multiple Failed Logins (Typo) :: Benign/Low targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.34.2.65",
+      "magnitude": 2,
+      "severity": 1,
+      "credibility": 4,
+      "relevance": 3,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 17,
+      "flow_count": 3,
+      "start_time": "2025-11-03T12:47:00+00:00",
+      "last_updated_time": "2025-11-03T14:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Benign/Low",
+    "triage": {
+      "summary": "Likely port scan: Single User Multiple Failed Logins (Typo) from internal host 10.34.2.65 against billing-app-01 (10.20.6.21) over TCP, 17 events observed.",
+      "matched_technique": {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Single User Multiple Failed Logins (Typo); rules: Auth: Repeated Failures Single Account) overlap most strongly with T1590 Gather Victim Network Information among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Informational",
+        "reasoning": "Scored Informational based on: QRadar magnitude 2/10."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.34.2.65\" and DestinationIP == \"10.20.6.21\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1110",
+        "name": "Brute Force",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1078",
+        "name": "Valid Accounts",
+        "tactics": [
+          "Stealth",
+          "Persistence",
+          "Privilege Escalation",
+          "Initial Access"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1548.002",
+        "name": "Bypass User Account Control",
+        "tactics": [
+          "Privilege Escalation"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.077Z"
+  },
+  {
+    "id": "ALERT-4215",
+    "timestamp": "2025-11-03T04:47:00+00:00",
+    "alert_name": "Nmap SYN Scan From Single Host",
+    "severity_raw": 5,
+    "src_ip": "18.65.37.198",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4215,
+      "description": "Nmap SYN Scan From Single Host :: Port Scan targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "18.65.37.198",
+      "magnitude": 3,
+      "severity": 5,
+      "credibility": 6,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 2388,
+      "flow_count": 1277,
+      "start_time": "2025-11-03T04:47:00+00:00",
+      "last_updated_time": "2025-11-03T05:04:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 22
+    },
+    "ground_truth_label": "Port Scan",
+    "triage": {
+      "summary": "Likely port scan: Nmap SYN Scan From Single Host from external source 18.65.37.198 against file-srv-02 (10.20.4.30) over TCP, 2,388 events observed.",
+      "matched_technique": {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Nmap SYN Scan From Single Host; rules: Recon: Excessive Firewall Denies From Single Host) overlap most strongly with T1595 Active Scanning among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Low",
+        "reasoning": "Scored Low based on: QRadar magnitude 3/10; source is external to the network."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"18.65.37.198\" and DestinationIP == \"10.20.4.30\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4.5
+      },
+      {
+        "id": "T1070.004",
+        "name": "File Deletion",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1564.005",
+        "name": "Hidden File System",
+        "tactics": [
+          "Stealth"
+        ],
+        "score": 3.5
+      },
+      {
+        "id": "T1596.005",
+        "name": "Scan Databases",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 3.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.078Z"
+  },
+  {
+    "id": "ALERT-4216",
+    "timestamp": "2025-11-03T06:01:00+00:00",
+    "alert_name": "Single User Multiple Failed Logins (Typo)",
+    "severity_raw": 1,
+    "src_ip": "10.45.8.208",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4216,
+      "description": "Single User Multiple Failed Logins (Typo) :: Benign/Low targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "10.45.8.208",
+      "magnitude": 1,
+      "severity": 1,
+      "credibility": 6,
+      "relevance": 2,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 30,
+      "flow_count": 29,
+      "start_time": "2025-11-03T06:01:00+00:00",
+      "last_updated_time": "2025-11-03T06:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Benign/Low",
+    "triage": {
+      "summary": "Likely port scan: Single User Multiple Failed Logins (Typo) from internal host 10.45.8.208 against file-srv-02 (10.20.4.30) over TCP, 30 events observed.",
+      "matched_technique": {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "confidence": 0.63,
+        "justification": "Alert indicators (Single User Multiple Failed Logins (Typo); rules: Auth: Repeated Failures Single Account) overlap most strongly with T1590 Gather Victim Network Information among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "Informational",
+        "reasoning": "Scored Informational based on: QRadar magnitude 1/10."
+      },
+      "next_steps": [
+        "Confirm the scan scope: how many destination ports/hosts were touched by the source IP.",
+        "Check whether any scanned port returned a SYN-ACK (successful connection) vs. all resets.",
+        "Block or rate-limit the source IP at the perimeter if it is external and unrecognized.",
+        "Search for follow-on activity from the same source (exploit attempts, logins)."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"10.45.8.208\" and DestinationIP == \"10.20.4.30\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1590",
+        "name": "Gather Victim Network Information",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1110",
+        "name": "Brute Force",
+        "tactics": [
+          "Credential Access"
+        ],
+        "score": 7
+      },
+      {
+        "id": "T1595",
+        "name": "Active Scanning",
+        "tactics": [
+          "Reconnaissance"
+        ],
+        "score": 6.5
+      },
+      {
+        "id": "T1046",
+        "name": "Network Service Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 6
+      },
+      {
+        "id": "T1078",
+        "name": "Valid Accounts",
+        "tactics": [
+          "Stealth",
+          "Persistence",
+          "Privilege Escalation",
+          "Initial Access"
+        ],
+        "score": 5.5
+      },
+      {
+        "id": "T1548.002",
+        "name": "Bypass User Account Control",
+        "tactics": [
+          "Privilege Escalation"
+        ],
+        "score": 5
+      },
+      {
+        "id": "T1018",
+        "name": "Remote System Discovery",
+        "tactics": [
+          "Discovery"
+        ],
+        "score": 4.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.079Z"
+  },
+  {
+    "id": "ALERT-4217",
+    "timestamp": "2025-11-03T11:36:00+00:00",
+    "alert_name": "UDP Amplification Flood",
+    "severity_raw": 7,
+    "src_ip": "104.18.48.58",
+    "dest_ip": "10.20.4.11",
+    "protocol": "TCP",
+    "asset": "web-prod-01",
+    "raw_details": {
+      "offense_id": 4217,
+      "description": "UDP Amplification Flood :: DoS/DDoS targeting web-prod-01",
+      "offense_type": "Destination IP",
+      "offense_source": "104.18.48.58",
+      "magnitude": 6,
+      "severity": 7,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 331168,
+      "flow_count": 78800,
+      "start_time": "2025-11-03T11:36:00+00:00",
+      "last_updated_time": "2025-11-03T12:31:00+00:00",
+      "categories": [
+        "Denial of Service",
+        "Network DoS Attack"
+      ],
+      "rules": [
+        "DoS: Possible Network DoS Detected",
+        "DoS: SYN Flood Against Single Destination"
+      ],
+      "assigned_to": null,
+      "dest_port": 53
+    },
+    "ground_truth_label": "DoS/DDoS",
+    "triage": {
+      "summary": "Likely dos/ddos: UDP Amplification Flood from external source 104.18.48.58 against web-prod-01 (10.20.4.11) over TCP, 331,168 events observed.",
+      "matched_technique": {
+        "id": "T1498",
+        "name": "Network Denial of Service",
+        "confidence": 0.95,
+        "justification": "Alert indicators (UDP Amplification Flood; rules: DoS: Possible Network DoS Detected) overlap most strongly with T1498 Network Denial of Service among the ATT&CK shortlist."
+      },
+      "priority": {
+        "level": "High",
+        "reasoning": "Scored High based on: QRadar magnitude 6/10; high severity (7/10); source is external to the network; credibility 7/10."
+      },
+      "next_steps": [
+        "Confirm impact: is the destination service degraded or still responsive?",
+        "Identify whether traffic is from a single source or distributed; engage upstream/ISP scrubbing if distributed.",
+        "Apply rate-limiting / SYN-cookie protections on the targeted service.",
+        "Preserve NetFlow for the attack window for post-incident review."
+      ],
+      "suggested_query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where SourceIP == \"104.18.48.58\" and DestinationIP == \"10.20.4.11\"\n| summarize Events=count() by DestinationPort, Protocol\n| order by Events desc"
+    },
+    "candidates": [
+      {
+        "id": "T1498",
+        "name": "Network Denial of Service",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 13.5
+      },
+      {
+        "id": "T1499",
+        "name": "Endpoint Denial of Service",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 11.5
+      },
+      {
+        "id": "T1498.001",
+        "name": "Direct Network Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1499.002",
+        "name": "Service Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 8
+      },
+      {
+        "id": "T1499.001",
+        "name": "OS Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 7.5
+      },
+      {
+        "id": "T1499.003",
+        "name": "Application Exhaustion Flood",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 6.5
+      },
+      {
+        "id": "T1498.002",
+        "name": "Reflection Amplification",
+        "tactics": [
+          "Impact"
+        ],
+        "score": 5.5
+      }
+    ],
+    "engine": "heuristic",
+    "model": null,
+    "triaged_at": "2026-07-13T22:23:49.080Z"
+  }
+]

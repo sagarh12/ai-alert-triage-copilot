@@ -1,0 +1,3 @@
+# Only prepare_alerts.py needs pandas (optional, for real datasets).
+# generate_demo_alerts.py is pure stdlib and needs nothing.
+pandas>=2.0

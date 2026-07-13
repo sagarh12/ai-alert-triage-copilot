@@ -1,0 +1,722 @@
+[
+  {
+    "id": "ALERT-4200",
+    "timestamp": "2025-11-03T03:43:00+00:00",
+    "alert_name": "Communication With Known Botnet IP",
+    "severity_raw": 6,
+    "src_ip": "10.41.9.24",
+    "dest_ip": "10.20.1.2",
+    "protocol": "TCP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4200,
+      "description": "Communication With Known Botnet IP :: Bot targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.41.9.24",
+      "magnitude": 6,
+      "severity": 6,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 576,
+      "flow_count": 1134,
+      "start_time": "2025-11-03T03:43:00+00:00",
+      "last_updated_time": "2025-11-03T03:47:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Malware: Outbound Connection To Known C2",
+        "Anomaly: Regular Beaconing Interval Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 6667
+    },
+    "ground_truth_label": "Bot"
+  },
+  {
+    "id": "ALERT-4201",
+    "timestamp": "2025-11-03T08:11:00+00:00",
+    "alert_name": "Meterpreter Reverse Shell Pattern",
+    "severity_raw": 9,
+    "src_ip": "10.26.9.109",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4201,
+      "description": "Meterpreter Reverse Shell Pattern :: Infiltration targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.26.9.109",
+      "magnitude": 9,
+      "severity": 9,
+      "credibility": 6,
+      "relevance": 8,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 764,
+      "flow_count": 482,
+      "start_time": "2025-11-03T08:11:00+00:00",
+      "last_updated_time": "2025-11-03T08:47:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration"
+  },
+  {
+    "id": "ALERT-4202",
+    "timestamp": "2025-11-03T04:50:00+00:00",
+    "alert_name": "Possible DNS Tunneling Detected",
+    "severity_raw": 8,
+    "src_ip": "10.26.6.28",
+    "dest_ip": "10.20.2.10",
+    "protocol": "DNS",
+    "asset": "dc-01-domain-controller",
+    "raw_details": {
+      "offense_id": 4202,
+      "description": "Possible DNS Tunneling Detected :: Data Exfiltration targeting dc-01-domain-controller",
+      "offense_type": "Source IP",
+      "offense_source": "10.26.6.28",
+      "magnitude": 7,
+      "severity": 8,
+      "credibility": 7,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 1011,
+      "flow_count": 7827,
+      "start_time": "2025-11-03T04:50:00+00:00",
+      "last_updated_time": "2025-11-03T05:06:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 53
+    },
+    "ground_truth_label": "Data Exfiltration"
+  },
+  {
+    "id": "ALERT-4203",
+    "timestamp": "2025-11-03T12:38:00+00:00",
+    "alert_name": "Policy Violation: Unapproved Cloud Storage",
+    "severity_raw": 3,
+    "src_ip": "10.22.9.77",
+    "dest_ip": "10.50.3.44",
+    "protocol": "TCP",
+    "asset": "hmi-station-03",
+    "raw_details": {
+      "offense_id": 4203,
+      "description": "Policy Violation: Unapproved Cloud Storage :: Benign/Low targeting hmi-station-03",
+      "offense_type": "Source IP",
+      "offense_source": "10.22.9.77",
+      "magnitude": 1,
+      "severity": 3,
+      "credibility": 3,
+      "relevance": 1,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "ot_scada"
+      ],
+      "event_count": 17,
+      "flow_count": 21,
+      "start_time": "2025-11-03T12:38:00+00:00",
+      "last_updated_time": "2025-11-03T13:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Benign/Low"
+  },
+  {
+    "id": "ALERT-4204",
+    "timestamp": "2025-11-03T02:33:00+00:00",
+    "alert_name": "RDP Failed Logins Threshold Exceeded",
+    "severity_raw": 6,
+    "src_ip": "98.79.243.215",
+    "dest_ip": "10.20.1.2",
+    "protocol": "TCP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4204,
+      "description": "RDP Failed Logins Threshold Exceeded :: Brute Force targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "98.79.243.215",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 3110,
+      "flow_count": 1916,
+      "start_time": "2025-11-03T02:33:00+00:00",
+      "last_updated_time": "2025-11-03T03:08:00+00:00",
+      "categories": [
+        "Authentication",
+        "User Login Failure"
+      ],
+      "rules": [
+        "Auth: Multiple Login Failures From Single Source",
+        "Auth: Brute Force Login Attempt"
+      ],
+      "assigned_to": null,
+      "dest_port": 3389
+    },
+    "ground_truth_label": "Brute Force"
+  },
+  {
+    "id": "ALERT-4205",
+    "timestamp": "2025-11-03T03:04:00+00:00",
+    "alert_name": "Directory Traversal Against Web Server",
+    "severity_raw": 6,
+    "src_ip": "156.240.2.115",
+    "dest_ip": "10.20.1.2",
+    "protocol": "HTTP",
+    "asset": "vpn-gw-01",
+    "raw_details": {
+      "offense_id": 4205,
+      "description": "Directory Traversal Against Web Server :: Web Attack targeting vpn-gw-01",
+      "offense_type": "Source IP",
+      "offense_source": "156.240.2.115",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 6,
+      "relevance": 8,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 214,
+      "flow_count": 158,
+      "start_time": "2025-11-03T03:04:00+00:00",
+      "last_updated_time": "2025-11-03T04:33:00+00:00",
+      "categories": [
+        "Exploit",
+        "Web Application Attack"
+      ],
+      "rules": [
+        "Web: SQL Injection Signature Match",
+        "Web: Malicious Request Pattern"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Web Attack"
+  },
+  {
+    "id": "ALERT-4206",
+    "timestamp": "2025-11-03T12:52:00+00:00",
+    "alert_name": "Nmap SYN Scan From Single Host",
+    "severity_raw": 3,
+    "src_ip": "57.56.179.38",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4206,
+      "description": "Nmap SYN Scan From Single Host :: Port Scan targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "57.56.179.38",
+      "magnitude": 3,
+      "severity": 3,
+      "credibility": 5,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 2043,
+      "flow_count": 1496,
+      "start_time": "2025-11-03T12:52:00+00:00",
+      "last_updated_time": "2025-11-03T13:20:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Port Scan"
+  },
+  {
+    "id": "ALERT-4207",
+    "timestamp": "2025-11-03T11:37:00+00:00",
+    "alert_name": "SYN Flood Detected",
+    "severity_raw": 9,
+    "src_ip": "184.201.58.207",
+    "dest_ip": "10.20.5.9",
+    "protocol": "TCP",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4207,
+      "description": "SYN Flood Detected :: DoS/DDoS targeting mail-relay-01",
+      "offense_type": "Destination IP",
+      "offense_source": "184.201.58.207",
+      "magnitude": 8,
+      "severity": 9,
+      "credibility": 9,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 124905,
+      "flow_count": 54718,
+      "start_time": "2025-11-03T11:37:00+00:00",
+      "last_updated_time": "2025-11-03T12:09:00+00:00",
+      "categories": [
+        "Denial of Service",
+        "Network DoS Attack"
+      ],
+      "rules": [
+        "DoS: Possible Network DoS Detected",
+        "DoS: SYN Flood Against Single Destination"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "DoS/DDoS"
+  },
+  {
+    "id": "ALERT-4208",
+    "timestamp": "2025-11-03T03:17:00+00:00",
+    "alert_name": "Suspected Lateral Movement (SMB)",
+    "severity_raw": 10,
+    "src_ip": "10.33.7.94",
+    "dest_ip": "10.20.5.9",
+    "protocol": "TCP",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4208,
+      "description": "Suspected Lateral Movement (SMB) :: Infiltration targeting mail-relay-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.33.7.94",
+      "magnitude": 9,
+      "severity": 10,
+      "credibility": 6,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 162,
+      "flow_count": 206,
+      "start_time": "2025-11-03T03:17:00+00:00",
+      "last_updated_time": "2025-11-03T03:38:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration"
+  },
+  {
+    "id": "ALERT-4209",
+    "timestamp": "2025-11-03T12:05:00+00:00",
+    "alert_name": "Sensitive Data Egress Over HTTPS",
+    "severity_raw": 9,
+    "src_ip": "10.22.7.99",
+    "dest_ip": "10.20.5.9",
+    "protocol": "DNS",
+    "asset": "mail-relay-01",
+    "raw_details": {
+      "offense_id": 4209,
+      "description": "Sensitive Data Egress Over HTTPS :: Data Exfiltration targeting mail-relay-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.22.7.99",
+      "magnitude": 8,
+      "severity": 9,
+      "credibility": 5,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 4671,
+      "flow_count": 5873,
+      "start_time": "2025-11-03T12:05:00+00:00",
+      "last_updated_time": "2025-11-03T12:43:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Data Exfiltration"
+  },
+  {
+    "id": "ALERT-4210",
+    "timestamp": "2025-11-03T11:23:00+00:00",
+    "alert_name": "Sensitive Data Egress Over HTTPS",
+    "severity_raw": 9,
+    "src_ip": "10.34.1.246",
+    "dest_ip": "10.20.2.10",
+    "protocol": "DNS",
+    "asset": "dc-01-domain-controller",
+    "raw_details": {
+      "offense_id": 4210,
+      "description": "Sensitive Data Egress Over HTTPS :: Data Exfiltration targeting dc-01-domain-controller",
+      "offense_type": "Source IP",
+      "offense_source": "10.34.1.246",
+      "magnitude": 7,
+      "severity": 9,
+      "credibility": 5,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 8617,
+      "flow_count": 3558,
+      "start_time": "2025-11-03T11:23:00+00:00",
+      "last_updated_time": "2025-11-03T12:11:00+00:00",
+      "categories": [
+        "Data Transfer",
+        "Potential Data Loss/Theft"
+      ],
+      "rules": [
+        "Exfil: Abnormal Outbound Data Volume",
+        "Exfil: High Entropy DNS Queries"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Data Exfiltration"
+  },
+  {
+    "id": "ALERT-4211",
+    "timestamp": "2025-11-03T08:45:00+00:00",
+    "alert_name": "SSH Brute Force Against Server",
+    "severity_raw": 6,
+    "src_ip": "200.84.16.143",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4211,
+      "description": "SSH Brute Force Against Server :: Brute Force targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "200.84.16.143",
+      "magnitude": 7,
+      "severity": 6,
+      "credibility": 9,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 1116,
+      "flow_count": 3173,
+      "start_time": "2025-11-03T08:45:00+00:00",
+      "last_updated_time": "2025-11-03T09:16:00+00:00",
+      "categories": [
+        "Authentication",
+        "User Login Failure"
+      ],
+      "rules": [
+        "Auth: Multiple Login Failures From Single Source",
+        "Auth: Brute Force Login Attempt"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Brute Force"
+  },
+  {
+    "id": "ALERT-4212",
+    "timestamp": "2025-11-03T04:37:00+00:00",
+    "alert_name": "Horizontal Port Scan Detected",
+    "severity_raw": 4,
+    "src_ip": "146.62.77.226",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4212,
+      "description": "Horizontal Port Scan Detected :: Port Scan targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "146.62.77.226",
+      "magnitude": 5,
+      "severity": 4,
+      "credibility": 5,
+      "relevance": 4,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 925,
+      "flow_count": 2346,
+      "start_time": "2025-11-03T04:37:00+00:00",
+      "last_updated_time": "2025-11-03T04:59:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 22
+    },
+    "ground_truth_label": "Port Scan"
+  },
+  {
+    "id": "ALERT-4213",
+    "timestamp": "2025-11-03T02:54:00+00:00",
+    "alert_name": "Unusual Admin Share Access Across Hosts",
+    "severity_raw": 8,
+    "src_ip": "10.47.7.248",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4213,
+      "description": "Unusual Admin Share Access Across Hosts :: Infiltration targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.47.7.248",
+      "magnitude": 9,
+      "severity": 8,
+      "credibility": 8,
+      "relevance": 9,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 458,
+      "flow_count": 737,
+      "start_time": "2025-11-03T02:54:00+00:00",
+      "last_updated_time": "2025-11-03T03:42:00+00:00",
+      "categories": [
+        "Malware",
+        "Botnet Communication"
+      ],
+      "rules": [
+        "Anomaly: Internal Host Scanning Peers",
+        "Malware: Reverse Shell Signature Match"
+      ],
+      "assigned_to": null,
+      "dest_port": 445
+    },
+    "ground_truth_label": "Infiltration"
+  },
+  {
+    "id": "ALERT-4214",
+    "timestamp": "2025-11-03T12:47:00+00:00",
+    "alert_name": "Single User Multiple Failed Logins (Typo)",
+    "severity_raw": 1,
+    "src_ip": "10.34.2.65",
+    "dest_ip": "10.20.6.21",
+    "protocol": "TCP",
+    "asset": "billing-app-01",
+    "raw_details": {
+      "offense_id": 4214,
+      "description": "Single User Multiple Failed Logins (Typo) :: Benign/Low targeting billing-app-01",
+      "offense_type": "Source IP",
+      "offense_source": "10.34.2.65",
+      "magnitude": 2,
+      "severity": 1,
+      "credibility": 4,
+      "relevance": 3,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 17,
+      "flow_count": 3,
+      "start_time": "2025-11-03T12:47:00+00:00",
+      "last_updated_time": "2025-11-03T14:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 443
+    },
+    "ground_truth_label": "Benign/Low"
+  },
+  {
+    "id": "ALERT-4215",
+    "timestamp": "2025-11-03T04:47:00+00:00",
+    "alert_name": "Nmap SYN Scan From Single Host",
+    "severity_raw": 5,
+    "src_ip": "18.65.37.198",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4215,
+      "description": "Nmap SYN Scan From Single Host :: Port Scan targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "18.65.37.198",
+      "magnitude": 3,
+      "severity": 5,
+      "credibility": 6,
+      "relevance": 5,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 2388,
+      "flow_count": 1277,
+      "start_time": "2025-11-03T04:47:00+00:00",
+      "last_updated_time": "2025-11-03T05:04:00+00:00",
+      "categories": [
+        "Reconnaissance",
+        "Suspicious Activity"
+      ],
+      "rules": [
+        "Recon: Excessive Firewall Denies From Single Host",
+        "Recon: Port Scan Detected"
+      ],
+      "assigned_to": null,
+      "dest_port": 22
+    },
+    "ground_truth_label": "Port Scan"
+  },
+  {
+    "id": "ALERT-4216",
+    "timestamp": "2025-11-03T06:01:00+00:00",
+    "alert_name": "Single User Multiple Failed Logins (Typo)",
+    "severity_raw": 1,
+    "src_ip": "10.45.8.208",
+    "dest_ip": "10.20.4.30",
+    "protocol": "TCP",
+    "asset": "file-srv-02",
+    "raw_details": {
+      "offense_id": 4216,
+      "description": "Single User Multiple Failed Logins (Typo) :: Benign/Low targeting file-srv-02",
+      "offense_type": "Source IP",
+      "offense_source": "10.45.8.208",
+      "magnitude": 1,
+      "severity": 1,
+      "credibility": 6,
+      "relevance": 2,
+      "status": "OPEN",
+      "source_network": "internal_corp",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 30,
+      "flow_count": 29,
+      "start_time": "2025-11-03T06:01:00+00:00",
+      "last_updated_time": "2025-11-03T06:08:00+00:00",
+      "categories": [
+        "Recon",
+        "Information Gathering"
+      ],
+      "rules": [
+        "Auth: Repeated Failures Single Account",
+        "Policy: Acceptable Use Violation"
+      ],
+      "assigned_to": null,
+      "dest_port": 80
+    },
+    "ground_truth_label": "Benign/Low"
+  },
+  {
+    "id": "ALERT-4217",
+    "timestamp": "2025-11-03T11:36:00+00:00",
+    "alert_name": "UDP Amplification Flood",
+    "severity_raw": 7,
+    "src_ip": "104.18.48.58",
+    "dest_ip": "10.20.4.11",
+    "protocol": "TCP",
+    "asset": "web-prod-01",
+    "raw_details": {
+      "offense_id": 4217,
+      "description": "UDP Amplification Flood :: DoS/DDoS targeting web-prod-01",
+      "offense_type": "Destination IP",
+      "offense_source": "104.18.48.58",
+      "magnitude": 6,
+      "severity": 7,
+      "credibility": 7,
+      "relevance": 7,
+      "status": "OPEN",
+      "source_network": "external",
+      "destination_networks": [
+        "internal_corp"
+      ],
+      "event_count": 331168,
+      "flow_count": 78800,
+      "start_time": "2025-11-03T11:36:00+00:00",
+      "last_updated_time": "2025-11-03T12:31:00+00:00",
+      "categories": [
+        "Denial of Service",
+        "Network DoS Attack"
+      ],
+      "rules": [
+        "DoS: Possible Network DoS Detected",
+        "DoS: SYN Flood Against Single Destination"
+      ],
+      "assigned_to": null,
+      "dest_port": 53
+    },
+    "ground_truth_label": "DoS/DDoS"
+  }
+]
