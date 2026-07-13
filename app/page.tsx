@@ -39,9 +39,12 @@ export default function QueuePage() {
           </div>
           <div className="flex items-center gap-2 font-mono text-xs">
             <span className="chip border-white/10 text-white/50">
-              engine: <span className="ml-1 text-primary">{stats.engine}</span>
+              engine: <span className="ml-1 text-body/80">{stats.engine}</span>
             </span>
-            <Link href="/overview" className="chip border-secondary/25 text-secondary/80 hover:bg-secondary/10">
+            <Link
+              href="/overview"
+              className="chip border-white/12 text-white/60 transition-colors hover:border-primary/30 hover:text-primary"
+            >
               view overview →
             </Link>
           </div>
@@ -51,12 +54,12 @@ export default function QueuePage() {
           <Stat label="Alerts triaged" value={stats.total} />
           <Stat label="Critical" value={critical} accent="text-crit" />
           <Stat label="High" value={high} accent="text-high" />
-          <Stat label="ATT&CK tactics" value={stats.byTactic.length} accent="text-secondary" />
+          <Stat label="ATT&CK tactics" value={stats.byTactic.length} />
         </div>
 
         {alerts.length === 0 ? (
           <div className="panel px-4 py-12 text-center font-mono text-sm text-white/50">
-            No triaged alerts found. Run the pipeline: <code className="text-primary">npm run pipeline</code>
+            No triaged alerts found. Run the pipeline: <code className="text-body">npm run pipeline</code>
           </div>
         ) : (
           <AlertQueue rows={rows} tactics={allTactics()} />
@@ -66,7 +69,7 @@ export default function QueuePage() {
   );
 }
 
-function Stat({ label, value, accent = "text-primary" }: { label: string; value: number; accent?: string }) {
+function Stat({ label, value, accent = "text-body" }: { label: string; value: number; accent?: string }) {
   return (
     <div className="panel px-4 py-3.5">
       <div className={`font-mono text-2xl font-bold ${accent}`}>{value}</div>

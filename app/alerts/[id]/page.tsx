@@ -30,7 +30,7 @@ export default function AlertDetail({ params }: { params: { id: string } }) {
             <PriorityBadge level={t.priority.level} />
             <span className="font-mono text-xs text-white/40">{alert.id}</span>
             <span className="chip border-white/10 text-white/40">
-              engine: <span className="ml-1 text-primary">{alert.engine}</span>
+              engine: <span className="ml-1 text-body/80">{alert.engine}</span>
               {alert.model ? <span className="ml-1 text-white/30">/ {alert.model}</span> : null}
             </span>
           </div>
@@ -76,8 +76,8 @@ export default function AlertDetail({ params }: { params: { id: string } }) {
         </section>
 
         {/* AI TRIAGE */}
-        <section className="panel border-primary/[0.14] p-5">
-          <h2 className="mb-3 font-mono text-xs uppercase tracking-wider text-primary/70">
+        <section className="panel p-5">
+          <h2 className="mb-3 font-mono text-xs uppercase tracking-wider text-white/40">
             AI triage
           </h2>
 
@@ -104,7 +104,7 @@ export default function AlertDetail({ params }: { params: { id: string } }) {
             <ol className="space-y-1.5">
               {t.next_steps.map((s, i) => (
                 <li key={i} className="flex gap-2.5 text-[13px] leading-relaxed text-body/75">
-                  <span className="font-mono text-primary/70">{i + 1}.</span>
+                  <span className="font-mono text-white/45">{i + 1}.</span>
                   {s}
                 </li>
               ))}
@@ -129,8 +129,8 @@ export default function AlertDetail({ params }: { params: { id: string } }) {
               key={c.id}
               className={`chip gap-1.5 ${
                 c.id === t.matched_technique.id
-                  ? "border-primary/50 bg-primary/10 text-primary"
-                  : "border-white/10 text-white/50"
+                  ? "border-white/30 bg-white/[0.05] text-body"
+                  : "border-white/10 text-white/45"
               }`}
             >
               <span className="font-semibold">{c.id}</span>
@@ -148,7 +148,7 @@ function Field({ k, v, accent }: { k: string; v: string; accent?: boolean }) {
   return (
     <div className="flex flex-col">
       <dt className="text-[10.5px] uppercase tracking-wider text-white/30">{k}</dt>
-      <dd className={accent ? "text-primary/90" : "text-body/80"}>{v}</dd>
+      <dd className={accent ? "text-body" : "text-body/80"}>{v}</dd>
     </div>
   );
 }

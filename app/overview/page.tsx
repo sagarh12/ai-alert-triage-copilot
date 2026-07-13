@@ -24,11 +24,14 @@ export default function OverviewPage() {
           <h1 className="font-mono text-2xl font-bold tracking-tight text-body">Overview</h1>
           <p className="mt-1 text-sm text-white/50">
             {stats.total} alerts triaged by the{" "}
-            <span className="text-primary">{stats.engine}</span> engine ·
+            <span className="text-body/80">{stats.engine}</span> engine ·
             distribution by priority and MITRE ATT&CK tactic.
           </p>
         </div>
-        <Link href="/" className="chip border-secondary/25 text-secondary/80 hover:bg-secondary/10">
+        <Link
+          href="/"
+          className="chip border-white/12 text-white/60 transition-colors hover:border-primary/30 hover:text-primary"
+        >
           ← back to queue
         </Link>
       </div>
@@ -68,7 +71,7 @@ export default function OverviewPage() {
                 </span>
                 <div className="h-5 flex-1 overflow-hidden rounded bg-white/[0.04]">
                   <div
-                    className="h-full bg-secondary opacity-70"
+                    className="h-full bg-white/25"
                     style={{ width: `${(t.count / maxTactic) * 100}%` }}
                   />
                 </div>

@@ -139,7 +139,7 @@ export default function AlertQueue({
                     <div className="truncate font-mono text-[13.5px] text-body">{r.alert_name}</div>
                     <div className="truncate text-[12px] text-white/45">{r.summary}</div>
                   </div>
-                  <div className="font-mono text-[12px] text-primary/80">
+                  <div className="font-mono text-[12px] text-body/75">
                     {r.technique_id}
                     <span className="block truncate text-[11px] text-white/35">{r.tactic}</span>
                   </div>

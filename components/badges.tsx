@@ -20,7 +20,7 @@ export function PriorityBadge({ level }: { level: PriorityLevel }) {
 
 export function TacticBadge({ tactic }: { tactic: string }) {
   return (
-    <span className="chip border-secondary/25 bg-secondary/[0.06] text-secondary/90">
+    <span className="chip border-white/12 bg-white/[0.03] text-white/55">
       {tactic}
     </span>
   );
@@ -28,9 +28,9 @@ export function TacticBadge({ tactic }: { tactic: string }) {
 
 export function TechniqueBadge({ id, name }: { id: string; name: string }) {
   return (
-    <span className="chip gap-1.5 border-primary/25 bg-primary/[0.06] text-primary/90">
-      <span className="font-semibold">{id}</span>
-      <span className="text-primary/60">{name}</span>
+    <span className="chip gap-1.5 border-white/12 bg-white/[0.03] text-white/70">
+      <span className="font-medium text-body">{id}</span>
+      <span className="text-white/45">{name}</span>
     </span>
   );
 }

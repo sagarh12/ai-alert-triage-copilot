@@ -61,6 +61,6 @@ body {
     background-size: 44px 44px;
   }
   .kql {
-    @apply whitespace-pre-wrap break-words rounded-md border border-white/[0.06] bg-black/50 p-4 font-mono text-[12.5px] leading-relaxed text-secondary/90;
+    @apply whitespace-pre-wrap break-words rounded-md border border-white/[0.06] bg-black/50 p-4 font-mono text-[12.5px] leading-relaxed text-body/70;
   }
 }
