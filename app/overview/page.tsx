@@ -71,7 +71,7 @@ export default function OverviewPage() {
                 </span>
                 <div className="h-5 flex-1 overflow-hidden rounded bg-white/[0.04]">
                   <div
-                    className="h-full bg-white/25"
+                    className="h-full bg-secondary opacity-70"
                     style={{ width: `${(t.count / maxTactic) * 100}%` }}
                   />
                 </div>
